@@ -324,7 +324,7 @@ def insert_tweet(connection,tweet):
              res = connection.execute(sql,{
                 'id_tweets':tweet['id'],
                 'id_urls':id_urls
-                })
+             })
 
         ########################################
         # insert into the tweet_mentions table
