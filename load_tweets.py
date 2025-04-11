@@ -117,7 +117,7 @@ def insert_tweet(connection,tweet):
 
         # create/update the user
         sql = sqlalchemy.sql.text('''
-         INSERT INTO users
+            INSERT INTO users
                 (    id_users
                 ,    created_at
                 ,    updated_at
@@ -226,7 +226,7 @@ def insert_tweet(connection,tweet):
         # This means that every "in_reply_to_user_id" field must reference a valid entry in the users table.
         # If the id is not in the users table, then you'll need to add it in an "unhydrated" form.
         if tweet.get('in_reply_to_user_id',None) is not None:
-            sql=sqlalchemy.sql.text('''i
+            sql=sqlalchemy.sql.text('''
                 INSERT INTO users (id_users)
                 VALUES (:in_reply_to_user_id)
                 ON CONFLICT DO NOTHING
@@ -277,6 +277,7 @@ def insert_tweet(connection,tweet):
             )
             ON CONFLICT DO NOTHING
             ''')
+
         res = connection.execute(sql,{
             'id_tweets':tweet['id'],
             'id_users':tweet['user']['id'],
@@ -320,12 +321,11 @@ def insert_tweet(connection,tweet):
                     :id_urls
                 )
                 ON CONFLICT DO NOTHING
-            
-            ''')
-             res = connection.execute(sql,{
+                ''')
+            res = connection.execute(sql,{
                 'id_tweets':tweet['id'],
                 'id_urls':id_urls
-             })
+                })
 
         ########################################
         # insert into the tweet_mentions table
@@ -350,7 +350,6 @@ def insert_tweet(connection,tweet):
                 ON CONFLICT DO NOTHING
                 ''')
             connection.execute(sql, {'id_users': mention['id']})
-
 
             # insert into tweet_mentions
             sql=sqlalchemy.sql.text('''
@@ -431,7 +430,6 @@ def insert_tweet(connection,tweet):
                 'id_urls':id_urls,
                 'type':medium.get('type', None)
                 })
-
 
 ################################################################################
 # main functions
